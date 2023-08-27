@@ -1,0 +1,5 @@
+network_name ="nginx-network"
+subnetwork_name = "test-subnetwork"
+ip_cidr_range = "10.2.0.0/16"
+private_ip_cidr_range = "10.3.0.0/16"
+region = "us-central1"
