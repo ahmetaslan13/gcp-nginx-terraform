@@ -1,0 +1,28 @@
+stages:
+  - plan
+  - apply
+
+variables:
+  TF_CLI_ARGS: "-input=false -lock=true -no-color"
+  TF_WORKING_DIR: "terraform"
+
+terraform_job:
+  stage: plan
+  script:
+    - echo "Initializing Terraform"
+    - cd $TF_WORKING_DIR
+    - terraform init
+    - echo "Running Terraform plan"
+    - terraform plan $TF_CLI_ARGS -out=tfplan
+
+apply_job:
+  stage: apply
+  script:
+    - echo "Applying Terraform changes"
+    - cd $TF_WORKING_DIR
+    - terraform apply $TF_CLI_ARGS tfplan
+  when: manual
+  allow_failure: false
+  only:
+    - master
+
